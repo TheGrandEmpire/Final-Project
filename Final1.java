@@ -1,8 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Final1 {
@@ -27,7 +26,9 @@ public class Final1 {
 
     JButton saveButton = new JButton("Save");
     bottom.add(saveButton);
-    //add search, display, flashcard options later
+    JButton displayButton = new JButton("Display");
+    bottom.add(displayButton);
+    //add search, flashcard options later
     content.add(bottom,BorderLayout.PAGE_END);
 
     saveButton.addActionListener(new ActionListener() {
@@ -43,6 +44,42 @@ public class Final1 {
         } catch (IOException i) {
           i.printStackTrace();
         }
+      }
+    });
+
+    String line;
+    BufferedReader reader = new BufferedReader(new FileReader("foreignWords.txt"));
+    while ((line = reader.readLine()) != null)
+    {
+        String[] parts = line.split(":", 2);
+        if (parts.length >= 2)
+        {
+            String key = parts[0];
+            String value = parts[1];
+            frenchWords.put(key, value);
+        } else {
+            System.out.println("ignoring line: " + line);
+        }
+    }
+
+    displayButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        JFrame displayWindow = new JFrame();
+        JPanel displayContent = new JPanel();
+        /*displayContent.setLayout(new GridLayout(0,2)); //make a scrollList later
+        for(String key: frenchWords) { //goes through the entire hashmap
+          displayContent.add(new JLabel(key.toString())); //prints the english word
+          displayContent.add(new JLabel(frenchWords.get(key).toString())); //prints the corresponding french word
+          //alphabetize later
+        }*/ //this currently does not work only because this for loop doesn't work with hashmaps
+
+        displayContent.add(frenchWords);
+
+        displayWindow.setContentPane(displayContent);
+        displayWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        displayWindow.setLocation(700,200);
+        displayWindow.setSize(500,300);
+        displayWindow.setVisible(true);
       }
     });
 

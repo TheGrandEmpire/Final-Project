@@ -13,13 +13,18 @@ public class Final1 {
     JPanel content = new JPanel();
     content.setLayout(new BorderLayout());
     JPanel middle = new JPanel();
-    middle.setLayout(new GridLayout(1,0));
+    middle.setLayout(new GridLayout(2,0));
     JPanel bottom = new JPanel();
     bottom.setLayout(new GridLayout(0,2));
 
+    JLabel englishLabel = new JLabel("English:");
+    JLabel foreignLabel = new JLabel("French:");
+
     JTextField englishTF = new JTextField(); //set preferred size n stuff
+    middle.add(englishLabel);
     middle.add(englishTF);
     JTextField foreignTF = new JTextField();
+    middle.add(foreignLabel);
     middle.add(foreignTF);
     //add foreign script (e.g. cyrillic, hanzi) option
     content.add(middle,BorderLayout.CENTER);
@@ -70,14 +75,12 @@ public class Final1 {
       public void actionPerformed(ActionEvent e) {
         JFrame displayWindow = new JFrame();
         JPanel displayContent = new JPanel();
-        /*displayContent.setLayout(new GridLayout(0,2)); //make a scrollList later
-        for(String key: frenchWords) { //goes through the entire hashmap
-          displayContent.add(new JLabel(key.toString())); //prints the english word
-          displayContent.add(new JLabel(frenchWords.get(key).toString())); //prints the corresponding french word
-          //alphabetize later
-        }*/ //this currently does not work only because this for loop doesn't work with hashmaps
-
-        //displayContent.add(frenchWords);
+        displayContent.setLayout(new GridLayout(0,2)); //@TODO make a scrollList later
+        for (HashMap.Entry<String, String> entry : frenchWords.entrySet()) {
+          displayContent.add(new JLabel(entry.getKey().toString())); //prints the english word
+          displayContent.add(new JLabel(entry.getValue().toString())); //prints the corresponding french word
+          //@TODO alphabetize later
+        }
 
         displayWindow.setContentPane(displayContent);
         displayWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

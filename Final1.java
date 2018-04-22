@@ -48,18 +48,22 @@ public class Final1 {
     });
 
     String line;
-    BufferedReader reader = new BufferedReader(new FileReader("foreignWords.txt"));
-    while ((line = reader.readLine()) != null)
-    {
-        String[] parts = line.split(":", 2);
-        if (parts.length >= 2)
-        {
-            String key = parts[0];
-            String value = parts[1];
-            frenchWords.put(key, value);
-        } else {
-            System.out.println("ignoring line: " + line);
-        }
+    try{
+      BufferedReader reader = new BufferedReader(new FileReader("foreignWords.txt"));
+      while ((line = reader.readLine()) != null)
+      {
+          String[] parts = line.split(":", 2);
+          if (parts.length >= 2)
+          {
+              String key = parts[0];
+              String value = parts[1];
+              frenchWords.put(key, value);
+          } else {
+              System.out.println("ignoring line: " + line);
+          }
+      }
+    } catch (Exception f){
+      englishTF.setText("File not found");
     }
 
     displayButton.addActionListener(new ActionListener() {
@@ -73,7 +77,7 @@ public class Final1 {
           //alphabetize later
         }*/ //this currently does not work only because this for loop doesn't work with hashmaps
 
-        displayContent.add(frenchWords);
+        //displayContent.add(frenchWords);
 
         displayWindow.setContentPane(displayContent);
         displayWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

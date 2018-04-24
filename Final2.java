@@ -53,7 +53,7 @@ public class Final2 {
 
     JFrame flashcardWindow = new JFrame("Flashcards");
     JPanel flashcardContent = new JPanel();
-    java.util.List<String> keys = new ArrayList<String>(engToFrn.keySet());
+    java.util.ArrayList<String> keys = new ArrayList<String>(engToFrn.keySet());
     JLabel flashcardLabel = new JLabel();
     try {
       String flashcardKey = keys.get((int)(Math.random()*keys.size()));
@@ -89,7 +89,14 @@ public class Final2 {
           String translation = frnToEng.get(searchField.getText().trim());
           translationLabel.setText(translation);
         } else {
-          translationLabel.setText("Word not found.");
+        //  translationLabel.setText("Word not found.");
+          JFrame errorFrame = new JFrame("Error");
+          JPanel errorContent = new JPanel();
+          JOptionPane.showMessageDialog(errorFrame,"Word not found.","Inane error",JOptionPane.ERROR_MESSAGE);
+          errorFrame.setContentPane(errorContent);
+          errorFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+          errorFrame.setSize(500,300);
+          errorFrame.setVisible(false);
         }
       }
     });

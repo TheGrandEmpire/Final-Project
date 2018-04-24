@@ -30,7 +30,16 @@ public class Final2 {
     top.add(translationLabel);
     content.add(top,BorderLayout.PAGE_START);
 
-    middle = addTextFields(middle);
+    JLabel englishLabel = new JLabel("English:");
+    JLabel foreignLabel = new JLabel("French:");
+    JTextField englishTF = new JTextField(); //set preferred size n stuff
+    middle.add(englishLabel);
+    middle.add(englishTF);
+    JTextField foreignTF = new JTextField();
+    middle.add(foreignLabel);
+    middle.add(foreignTF);
+    //add foreign script (e.g. cyrillic, hanzi) option
+    content.add(middle,BorderLayout.CENTER);
 
     JButton saveButton = new JButton("Save");
     bottom.add(saveButton);
@@ -85,7 +94,25 @@ public class Final2 {
       }
     });
 
-    readDoc();
+    String line;
+    try{
+      BufferedReader reader = new BufferedReader(new FileReader("foreignWords.txt"));
+      while ((line = reader.readLine()) != null)
+      {
+          String[] parts = line.split(":", 2);
+          if (parts.length >= 2)
+          {
+              String key = parts[0];
+              String value = parts[1];
+              engToFrn.put(key,value);
+              frnToEng.put(value,key);
+          } else {
+              System.out.println("ignoring line: " + line);
+          }
+      }
+    } catch (Exception f){
+      englishTF.setText("File not found");
+    }
 
     displayButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -112,34 +139,16 @@ public class Final2 {
     flashcardWindow.setVisible(false);
   }
 
-  static void readDoc(){
-    String line;
-    try{
-      BufferedReader reader = new BufferedReader(new FileReader("foreignWords.txt"));
-      while ((line = reader.readLine()) != null)
-      {
-          String[] parts = line.split(":", 2);
-          if (parts.length >= 2)
-          {
-              String key = parts[0];
-              String value = parts[1];
-              engToFrn.put(key,value);
-              frnToEng.put(value,key);
-          } else {
-              System.out.println("ignoring line: " + line);
-          }
-      }
-    } catch (Exception f){
-      englishTF.setText("File not found");
-    }
-  }
-
   static void setdisplayWindowContent(){
       JFrame displayWindow = new JFrame("Display");
       JPanel displayContent = new JPanel();
       displayContent.setLayout(new GridLayout(0,2)); //@TODO make a scrollList
-      displayContent.add(new JLabel("English Words : French Words"));
+      displayContent.add(new JLabel("English Words:"));
+      displayContent.add(new JLabel("French Words:"));
       displayContent.add(getScroller(engToFrn));
+      displayContent.add(getScroller(frnToEng));
+
+
 
       displayWindow.setVisible(true);
       displayWindow.setContentPane(displayContent);
@@ -148,6 +157,7 @@ public class Final2 {
       displayWindow.setSize(500,300);
       displayWindow.setVisible(true);
   }
+<<<<<<< HEAD
 
   static void addTextFields(JPanel middle){
     JLabel englishLabel = new JLabel("English:");
@@ -162,13 +172,15 @@ public class Final2 {
     content.add(middle,BorderLayout.CENTER);
     return middle;
   }
+=======
+>>>>>>> parent of 08cf5d0... some minor refactoring
 
 
   static JScrollPane getScroller(HashMap<String,String> map){
     String[] engWords = new String[engToFrn.size()];
     int y = 0;
     for(HashMap.Entry<String, String> entry : map.entrySet()) {
-      engWords[y] = entry.getKey().toString() + " : " + entry.getValue().toString();
+      engWords[y] = entry.getKey().toString();
       y++;
     }
     JList engList = new JList(engWords);

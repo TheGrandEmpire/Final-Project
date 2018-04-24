@@ -148,19 +148,20 @@ public class Final2 {
       displayWindow.setSize(500,300);
       displayWindow.setVisible(true);
   }
-static void addTextFields(JPanel middle){
-  JLabel englishLabel = new JLabel("English:");
-  JLabel foreignLabel = new JLabel("French:");
-  JTextField englishTF = new JTextField(); //set preferred size n stuff
-  middle.add(englishLabel);
-  middle.add(englishTF);
-  JTextField foreignTF = new JTextField();
-  middle.add(foreignLabel);
-  middle.add(foreignTF);
-  //add foreign script (e.g. cyrillic, hanzi) option
-  content.add(middle,BorderLayout.CENTER);
-  return middle;
-}
+
+  static void addTextFields(JPanel middle){
+    JLabel englishLabel = new JLabel("English:");
+    JLabel foreignLabel = new JLabel("French:");
+    JTextField englishTF = new JTextField(); //set preferred size n stuff
+    middle.add(englishLabel);
+    middle.add(englishTF);
+    JTextField foreignTF = new JTextField();
+    middle.add(foreignLabel);
+    middle.add(foreignTF);
+    //add foreign script (e.g. cyrillic, hanzi) option
+    content.add(middle,BorderLayout.CENTER);
+    return middle;
+  }
 
 
   static JScrollPane getScroller(HashMap<String,String> map){

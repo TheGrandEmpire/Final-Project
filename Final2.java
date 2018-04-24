@@ -13,6 +13,7 @@ public class Final2 {
 
   public static void main(String[] args) {
     JFrame window = new JFrame("Final Project");
+    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
     JPanel content = new JPanel();
     content.setLayout(new BorderLayout());
     JPanel top = new JPanel();
@@ -50,8 +51,6 @@ public class Final2 {
     content.add(bottom,BorderLayout.PAGE_END);
 
 
-
-    JFrame flashcardWindow = new JFrame("Flashcards");
     JPanel flashcardContent = new JPanel();
     java.util.ArrayList<String> keys = new ArrayList<String>(engToFrn.keySet());
     JLabel flashcardLabel = new JLabel();
@@ -89,7 +88,6 @@ public class Final2 {
           String translation = frnToEng.get(searchField.getText().trim());
           translationLabel.setText(translation);
         } else {
-        //  translationLabel.setText("Word not found.");
           JFrame errorFrame = new JFrame("Error");
           JPanel errorContent = new JPanel();
           JOptionPane.showMessageDialog(errorFrame,"Word not found.","Inane error",JOptionPane.ERROR_MESSAGE);
@@ -105,27 +103,26 @@ public class Final2 {
 
     displayButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        setdisplayWindowContent();
+        JPanel displayContent = new JPanel();
+        displayContent.setLayout(new GridLayout(0,2)); //@TODO make a scrollList
+        //displayContent.add(new JLabel("English Words : French Words"));
+        displayContent.add(getScroller(engToFrn));
+        splitPane.setRightComponent(displayContent);
       }
     });
 
     flashcardButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        flashcardWindow.setVisible(true);
+        splitPane.setRightComponent(flashcardContent);
       }
     });
 
-    window.setContentPane(content);
+    splitPane.setLeftComponent(content);
+    window.setContentPane(splitPane);
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.setLocation(100,100);
     window.setSize(800,300);
     window.setVisible(true);
-
-    flashcardWindow.setContentPane(flashcardContent);
-    flashcardWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    flashcardWindow.setLocation(700,200);
-    flashcardWindow.setSize(500,300);
-    flashcardWindow.setVisible(false);
   }
 
   static void readDoc(){

@@ -132,7 +132,6 @@ public class Final2 {
     window.setSize(800,300);
     window.setVisible(true);
 
-
     flashcardWindow.setContentPane(flashcardContent);
     flashcardWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     flashcardWindow.setLocation(700,200);
@@ -144,11 +143,11 @@ public class Final2 {
       JFrame displayWindow = new JFrame("Display");
       JPanel displayContent = new JPanel();
       displayContent.setLayout(new GridLayout(0,2)); //@TODO make a scrollList
-      for(HashMap.Entry<String, String> entry : engToFrn.entrySet()) {
-        displayContent.add(new JLabel(entry.getKey().toString())); //displays the english word
-        displayContent.add(new JLabel(entry.getValue().toString())); //displays the corresponding french word
-        //@TODO alphabetize
-      }
+      displayContent.add(new JLabel("English Words:"));
+      displayContent.add(new JLabel("French Words:"));
+      displayContent.add(getScroller(engToFrn));
+      displayContent.add(getScroller(frnToEng));
+
 
 
       displayWindow.setVisible(true);
@@ -158,4 +157,19 @@ public class Final2 {
       displayWindow.setSize(500,300);
       displayWindow.setVisible(true);
   }
+
+
+  static JScrollPane getScroller(HashMap<String,String> map){
+    String[] engWords = new String[engToFrn.size()];
+    int y = 0;
+    for(HashMap.Entry<String, String> entry : map.entrySet()) {
+      engWords[y] = entry.getKey().toString();
+      y++;
+    }
+    JList engList = new JList(engWords);
+    engList.setLayoutOrientation(JList.VERTICAL);
+    JScrollPane engScroller = new JScrollPane(engList);
+    return engScroller;
+  }
+
 }

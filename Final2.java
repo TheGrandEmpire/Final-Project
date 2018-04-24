@@ -151,19 +151,33 @@ public class Final2 {
   }
 
   static void setdisplayWindowContent(){
-      JFrame displayWindow = new JFrame("Display");
-      JPanel displayContent = new JPanel();
-      displayContent.setLayout(new GridLayout(0,2)); //@TODO make a scrollList
-    //  displayContent.add(new JLabel("English Words : French Words"));
-      displayContent.add(getScroller(engToFrn));
+       JFrame displayWindow = new JFrame("List of Words");
+       JPanel miniPanel = new JPanel(new GridBagLayout());
+       GridBagConstraints c = new GridBagConstraints();
+       c.fill = GridBagConstraints.HORIZONTAL;
+       c.anchor = GridBagConstraints.PAGE_START;
+       c.weightx = 0;
 
-      displayWindow.setVisible(true);
-      displayWindow.setContentPane(displayContent);
-      displayWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-      displayWindow.setLocation(700,200);
-      displayWindow.setSize(500,300);
-      displayWindow.setVisible(true);
-  }
+       JLabel label1 = new JLabel("English Words : French Words");
+       miniPanel.add(label1, c);
+
+       c.anchor = GridBagConstraints.PAGE_END;
+       c.fill = GridBagConstraints.BOTH;
+       c.weightx = 1;
+       c.gridy = 1;
+       c.ipady = 8;
+       c.weighty = .8;
+       JScrollPane scoller = getScroller(engToFrn);
+
+       miniPanel.add(getScroller(engToFrn), c);
+
+       displayWindow.setVisible(true);
+       displayWindow.setContentPane(miniPanel);
+       displayWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+       displayWindow.setLocation(700,200);
+       displayWindow.setSize(300,300);
+       displayWindow.setVisible(true);
+   }
 
 
   static JScrollPane getScroller(HashMap<String,String> map){

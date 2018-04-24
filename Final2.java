@@ -7,11 +7,11 @@ import java.lang.*;
 import java.lang.RuntimeException.*;
 
 public class Final2 {
+
+  private static HashMap<String,String> engToFrn = new HashMap<String,String>();
+  private static HashMap<String,String> frnToEng = new HashMap<String,String>();
+
   public static void main(String[] args) {
-
-    HashMap<String,String> engToFrn = new HashMap<String,String>();
-    HashMap<String,String> frnToEng = new HashMap<String,String>();
-
     JFrame window = new JFrame("Final Project");
     JPanel content = new JPanel();
     content.setLayout(new BorderLayout());
@@ -49,14 +49,7 @@ public class Final2 {
     bottom.add(flashcardButton);
     content.add(bottom,BorderLayout.PAGE_END);
 
-    JFrame displayWindow = new JFrame("Display");
-    JPanel displayContent = new JPanel();
-    displayContent.setLayout(new GridLayout(0,2)); //@TODO make a scrollList
-    for(HashMap.Entry<String, String> entry : engToFrn.entrySet()) {
-      displayContent.add(new JLabel(entry.getKey().toString())); //displays the english word
-      displayContent.add(new JLabel(entry.getValue().toString())); //displays the corresponding french word
-      //@TODO alphabetize
-    }
+
 
     JFrame flashcardWindow = new JFrame("Flashcards");
     JPanel flashcardContent = new JPanel();
@@ -123,7 +116,7 @@ public class Final2 {
 
     displayButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        displayWindow.setVisible(true);
+        setdisplayWindowContent();
       }
     });
 
@@ -139,16 +132,30 @@ public class Final2 {
     window.setSize(800,300);
     window.setVisible(true);
 
-    displayWindow.setContentPane(displayContent);
-    displayWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    displayWindow.setLocation(700,200);
-    displayWindow.setSize(500,300);
-    displayWindow.setVisible(false);
 
     flashcardWindow.setContentPane(flashcardContent);
     flashcardWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     flashcardWindow.setLocation(700,200);
     flashcardWindow.setSize(500,300);
     flashcardWindow.setVisible(false);
+  }
+
+  static void setdisplayWindowContent(){
+      JFrame displayWindow = new JFrame("Display");
+      JPanel displayContent = new JPanel();
+      displayContent.setLayout(new GridLayout(0,2)); //@TODO make a scrollList
+      for(HashMap.Entry<String, String> entry : engToFrn.entrySet()) {
+        displayContent.add(new JLabel(entry.getKey().toString())); //displays the english word
+        displayContent.add(new JLabel(entry.getValue().toString())); //displays the corresponding french word
+        //@TODO alphabetize
+      }
+
+
+      displayWindow.setVisible(true);
+      displayWindow.setContentPane(displayContent);
+      displayWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+      displayWindow.setLocation(700,200);
+      displayWindow.setSize(500,300);
+      displayWindow.setVisible(true);
   }
 }

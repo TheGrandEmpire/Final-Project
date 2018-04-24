@@ -1,3 +1,13 @@
 dog:chien
+cat:chat
+story:histoire
+world:monde
+shoes:chassures
+friend:ami
+tea:the
+life:vie
+mouse:souris
+kill:tuer
+sleep:dormir
 computer:ordinateur
 Africa:Afrique

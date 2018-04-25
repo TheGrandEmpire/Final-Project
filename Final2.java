@@ -21,7 +21,7 @@ public class Final2 {
     JPanel middle = new JPanel();
     middle.setLayout(new GridLayout(2,0));
     JPanel bottom = new JPanel();
-    bottom.setLayout(new GridLayout(0,3));
+    bottom.setLayout(new GridLayout(2,2));
 
     JTextField searchField = new JTextField();
     top.add(searchField);
@@ -48,26 +48,16 @@ public class Final2 {
     bottom.add(displayButton);
     JButton flashcardButton = new JButton("Flashcards");
     bottom.add(flashcardButton);
+    JButton langSelectionButton = new JButton("Language Selection");
+    bottom.add(langSelectionButton);
     content.add(bottom,BorderLayout.PAGE_END);
 
-    JPanel flashcardContent = new JPanel();
-    flashcardContent.add(new JLabel("<html><h1>Coming soon!</h1></html>"));
+    JButton returnButton = new JButton("Return");
 
-    saveButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        String eng = englishTF.getText();
-        String forn = foreignTF.getText();
-        //write to file
-        try {
-          FileWriter writer = new FileWriter("foreignWords.txt", true);
-          writer.write(eng + ":" + forn);
-          writer.write("\r\n");   // write new line
-          writer.close();
-        } catch (IOException i) {
-          i.printStackTrace();
-        }
-      }
-    });
+    JPanel flashcardContent = new JPanel();
+    flashcardContent.setLayout(new GridLayout(0,1));
+    flashcardContent.add(new JLabel("<html><h1>Coming soon!</h1></html>"));
+    flashcardContent.add(returnButton);
 
     searchButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -89,12 +79,29 @@ public class Final2 {
       }
     });
 
+    saveButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        String eng = englishTF.getText();
+        String forn = foreignTF.getText();
+        //write to file
+        try {
+          FileWriter writer = new FileWriter("foreignWords.txt", true);
+          writer.write(eng + ":" + forn);
+          writer.write("\r\n");   // write new line
+          writer.close();
+        } catch (IOException i) {
+          i.printStackTrace();
+        }
+      }
+    });
+
     readDoc();
 
     displayButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         JPanel displayContent = new JPanel(new GridBagLayout());
         setdisplayWindowContent(displayContent);
+        displayContent.add(returnButton);
         splitPane.setRightComponent(displayContent);
         splitPane.setDividerLocation(0.6);
       }
@@ -104,6 +111,25 @@ public class Final2 {
       public void actionPerformed(ActionEvent e) {
         splitPane.setRightComponent(flashcardContent);
         splitPane.setDividerLocation(0.6);
+      }
+    });
+
+    langSelectionButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        JPanel langSelectionContent = new JPanel();
+        langSelectionContent.setLayout(new GridLayout(0,1));
+        JRadioButton frenchButton = new JRadioButton("English-French");
+        langSelectionContent.add(frenchButton);
+        langSelectionContent.add(new JLabel("<html>Users will soon be able to store vocabulary for more languages.</html>"));
+        langSelectionContent.add(returnButton);
+        splitPane.setRightComponent(langSelectionContent);
+        splitPane.setDividerLocation(0.6);
+      }
+    });
+
+    returnButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        splitPane.setDividerLocation(0.9999);
       }
     });
 

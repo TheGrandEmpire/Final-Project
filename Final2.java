@@ -140,7 +140,7 @@ public class Final2 {
     window.setVisible(true);
   }
 
-  /* Reads the document provided.
+  /** Reads the document provided.
    * By default, this document is foreignWords.txt.
    * It contains English words and their French translations.
   */
@@ -166,7 +166,7 @@ public class Final2 {
     }
   }
 
-  /* Sets the content of the display panel.
+  /** Sets the content of the display panel.
    * This panel then becomes the right component of the JSplitPane.
    * @param displayPanel the display panel
   */
@@ -190,7 +190,7 @@ public class Final2 {
        displayPanel.add(getScroller(engToFrn), c);
    }
 
-  /* Sets the content of the flashcard panel.
+  /** Sets the content of the flashcard panel.
    * This panel then becomes the right component of the JSplitPane.
    * @param flashcardPanel the flashcard panel
   */
@@ -199,7 +199,7 @@ public class Final2 {
     flashcardPanel.add(new JLabel("<html><h1>Coming soon!</h1></html>"));
   }
 
-  /* Sets the content of the language selection panel.
+  /** Sets the content of the language selection panel.
    * This panel then becomes the right component of the JSplitPane.
    * @param langSelectionPanel the language selection panel
   */
@@ -210,7 +210,7 @@ public class Final2 {
     langSelectionPanel.add(new JLabel("<html>Users will soon be able to store vocabulary for more languages.</html>"));
   }
 
-  /* Creates a scroller for the displayContent panel from the contents of the hashmap.
+  /** Creates a scroller for the displayContent panel from the contents of the hashmap.
   * @param map the HashMap of the words to be displayed in the scroller
   * @return engScroller the scroller to be displayed
   */

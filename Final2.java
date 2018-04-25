@@ -51,16 +51,7 @@ public class Final2 {
     content.add(bottom,BorderLayout.PAGE_END);
 
     JPanel flashcardContent = new JPanel();
-    java.util.ArrayList<String> keys = new ArrayList<String>(engToFrn.keySet());
-    JLabel flashcardLabel = new JLabel();
-    try {
-      String flashcardKey = keys.get((int)(Math.random()*keys.size()));
-      flashcardLabel.setText(flashcardKey);
-    } catch (IndexOutOfBoundsException iOOBE) {
-      flashcardLabel.setText("No words have been stored.");
-    }
-    flashcardContent.add(flashcardLabel);
-    //@TODO: add mouselistener to show translation, next/previous buttons
+    flashcardContent.add(new JLabel("<html><h1>Coming soon!</h1></html>"));
 
     saveButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {

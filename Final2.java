@@ -53,11 +53,7 @@ public class Final2 {
     content.add(bottom,BorderLayout.PAGE_END);
 
     JButton returnButton = new JButton("Return");
-
-    JPanel flashcardContent = new JPanel();
-    flashcardContent.setLayout(new GridLayout(0,1));
-    flashcardContent.add(new JLabel("<html><h1>Coming soon!</h1></html>"));
-    flashcardContent.add(returnButton);
+    returnButton.setSize(200,50);
 
     searchButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -99,8 +95,10 @@ public class Final2 {
 
     displayButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        JPanel displayContent = new JPanel(new GridBagLayout());
-        setdisplayWindowContent(displayContent);
+        JPanel displayContent = new JPanel(new GridLayout(0,1));
+        JPanel displayPanel = new JPanel(new GridBagLayout());
+        setDisplayPanelContent(displayPanel);
+        displayContent.add(displayPanel);
         displayContent.add(returnButton);
         splitPane.setRightComponent(displayContent);
         splitPane.setDividerLocation(0.6);
@@ -109,6 +107,11 @@ public class Final2 {
 
     flashcardButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
+        JPanel flashcardContent = new JPanel(new GridLayout(0,1));
+        JPanel flashcardPanel = new JPanel();
+        setFlashcardPanelContent(flashcardPanel);
+        flashcardContent.add(flashcardPanel);
+        flashcardContent.add(returnButton);
         splitPane.setRightComponent(flashcardContent);
         splitPane.setDividerLocation(0.6);
       }
@@ -116,11 +119,11 @@ public class Final2 {
 
     langSelectionButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        JPanel langSelectionContent = new JPanel();
+        JPanel langSelectionContent = new JPanel(new GridLayout(0,1));
         langSelectionContent.setLayout(new GridLayout(0,1));
-        JRadioButton frenchButton = new JRadioButton("English-French");
-        langSelectionContent.add(frenchButton);
-        langSelectionContent.add(new JLabel("<html>Users will soon be able to store vocabulary for more languages.</html>"));
+        JPanel langSelectionPanel = new JPanel();
+        setLangSelectionPanelContent(langSelectionPanel);
+        langSelectionContent.add(langSelectionPanel);
         langSelectionContent.add(returnButton);
         splitPane.setRightComponent(langSelectionContent);
         splitPane.setDividerLocation(0.6);
@@ -169,16 +172,16 @@ public class Final2 {
 
   /* Sets the content of the display panel.
    * This panel then becomes the right component of the JSplitPane.
-   * @param displayContent the display panel
+   * @param displayPanel the display panel
   */
-  static void setdisplayWindowContent(JPanel displayContent){
+  static void setDisplayPanelContent(JPanel displayPanel) {
        GridBagConstraints c = new GridBagConstraints();
        c.fill = GridBagConstraints.HORIZONTAL;
        c.anchor = GridBagConstraints.PAGE_START;
        c.weightx = 0;
 
        JLabel label1 = new JLabel("English Words : French Words");
-       displayContent.add(label1, c);
+       displayPanel.add(label1, c);
 
        c.anchor = GridBagConstraints.PAGE_END;
        c.fill = GridBagConstraints.BOTH;
@@ -188,8 +191,28 @@ public class Final2 {
        c.weighty = .8;
        JScrollPane scoller = getScroller(engToFrn);
 
-       displayContent.add(getScroller(engToFrn), c);
+       displayPanel.add(getScroller(engToFrn), c);
    }
+
+  /* Sets the content of the flashcard panel.
+   * This panel then becomes the right component of the JSplitPane.
+   * @param flashcardPanel the flashcard panel
+  */
+  static void setFlashcardPanelContent(JPanel flashcardPanel) {
+    flashcardPanel.setLayout(new GridLayout(0,1));
+    flashcardPanel.add(new JLabel("<html><h1>Coming soon!</h1></html>"));
+  }
+
+  /* Sets the content of the language selection panel.
+   * This panel then becomes the right component of the JSplitPane.
+   * @param langSelectionPanel the language selection panel
+  */
+  static void setLangSelectionPanelContent(JPanel langSelectionPanel) {
+    JRadioButton frenchButton = new JRadioButton("English-French");
+    langSelectionPanel.add(frenchButton);
+    /*If we expand upon this program, frenchButton will have an ActionListener setting the language to French, and other buttons for other languages.*/
+    langSelectionPanel.add(new JLabel("<html>Users will soon be able to store vocabulary for more languages.</html>"));
+  }
 
   /* Creates a scroller for the displayContent panel from the contents of the hashmap.
   * @param map the HashMap of the words to be displayed in the scroller

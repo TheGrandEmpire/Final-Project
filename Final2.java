@@ -50,7 +50,6 @@ public class Final2 {
     bottom.add(flashcardButton);
     content.add(bottom,BorderLayout.PAGE_END);
 
-
     JPanel flashcardContent = new JPanel();
     java.util.ArrayList<String> keys = new ArrayList<String>(engToFrn.keySet());
     JLabel flashcardLabel = new JLabel();
@@ -103,17 +102,17 @@ public class Final2 {
 
     displayButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        JPanel displayContent = new JPanel();
-        displayContent.setLayout(new GridLayout(0,2)); //@TODO make a scrollList
-        //displayContent.add(new JLabel("English Words : French Words"));
-        displayContent.add(getScroller(engToFrn));
+        JPanel displayContent = new JPanel(new GridBagLayout());
+        setdisplayWindowContent(displayContent);
         splitPane.setRightComponent(displayContent);
+        splitPane.setDividerLocation(0.6);
       }
     });
 
     flashcardButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         splitPane.setRightComponent(flashcardContent);
+        splitPane.setDividerLocation(0.6);
       }
     });
 
@@ -125,6 +124,10 @@ public class Final2 {
     window.setVisible(true);
   }
 
+  /* Reads the document provided.
+   * By default, this document is foreignWords.txt.
+   * It contains English words and their French translations.
+  */
   static void readDoc(){
     String line;
     try{
@@ -147,16 +150,18 @@ public class Final2 {
     }
   }
 
-  static void setdisplayWindowContent(){
-       JFrame displayWindow = new JFrame("List of Words");
-       JPanel miniPanel = new JPanel(new GridBagLayout());
+  /* Sets the content of the display panel.
+   * This panel then becomes the right component of the JSplitPane.
+   * @param displayContent the display panel
+  */
+  static void setdisplayWindowContent(JPanel displayContent){
        GridBagConstraints c = new GridBagConstraints();
        c.fill = GridBagConstraints.HORIZONTAL;
        c.anchor = GridBagConstraints.PAGE_START;
        c.weightx = 0;
 
        JLabel label1 = new JLabel("English Words : French Words");
-       miniPanel.add(label1, c);
+       displayContent.add(label1, c);
 
        c.anchor = GridBagConstraints.PAGE_END;
        c.fill = GridBagConstraints.BOTH;
@@ -166,17 +171,13 @@ public class Final2 {
        c.weighty = .8;
        JScrollPane scoller = getScroller(engToFrn);
 
-       miniPanel.add(getScroller(engToFrn), c);
-
-       displayWindow.setVisible(true);
-       displayWindow.setContentPane(miniPanel);
-       displayWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-       displayWindow.setLocation(700,200);
-       displayWindow.setSize(300,300);
-       displayWindow.setVisible(true);
+       displayContent.add(getScroller(engToFrn), c);
    }
 
-
+  /* Creates a scroller for the displayContent panel from the contents of the hashmap.
+  * @param map the HashMap of the words to be displayed in the scroller
+  * @return engScroller the scroller to be displayed
+  */
   static JScrollPane getScroller(HashMap<String,String> map){
     String[] engWords = new String[engToFrn.size()];
     int y = 0;

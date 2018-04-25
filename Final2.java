@@ -21,7 +21,7 @@ public class Final2 {
     JPanel middle = new JPanel();
     middle.setLayout(new GridLayout(2,0));
     JPanel bottom = new JPanel();
-    bottom.setLayout(new GridLayout(2,2));
+    bottom.setLayout(new GridLayout(0,3));
 
     JTextField searchField = new JTextField();
     top.add(searchField);
@@ -50,10 +50,11 @@ public class Final2 {
     bottom.add(flashcardButton);
     JButton langSelectionButton = new JButton("Language Selection");
     bottom.add(langSelectionButton);
+    JButton returnButton = new JButton("Return");
+    bottom.add(returnButton);
     content.add(bottom,BorderLayout.PAGE_END);
 
-    JButton returnButton = new JButton("Return");
-    returnButton.setSize(200,50);
+    readDoc();
 
     searchButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -91,15 +92,12 @@ public class Final2 {
       }
     });
 
-    readDoc();
-
     displayButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         JPanel displayContent = new JPanel(new GridLayout(0,1));
         JPanel displayPanel = new JPanel(new GridBagLayout());
         setDisplayPanelContent(displayPanel);
         displayContent.add(displayPanel);
-        displayContent.add(returnButton);
         splitPane.setRightComponent(displayContent);
         splitPane.setDividerLocation(0.6);
       }
@@ -111,7 +109,6 @@ public class Final2 {
         JPanel flashcardPanel = new JPanel();
         setFlashcardPanelContent(flashcardPanel);
         flashcardContent.add(flashcardPanel);
-        flashcardContent.add(returnButton);
         splitPane.setRightComponent(flashcardContent);
         splitPane.setDividerLocation(0.6);
       }
@@ -124,7 +121,6 @@ public class Final2 {
         JPanel langSelectionPanel = new JPanel();
         setLangSelectionPanelContent(langSelectionPanel);
         langSelectionContent.add(langSelectionPanel);
-        langSelectionContent.add(returnButton);
         splitPane.setRightComponent(langSelectionContent);
         splitPane.setDividerLocation(0.6);
       }
@@ -132,7 +128,7 @@ public class Final2 {
 
     returnButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        splitPane.setDividerLocation(0.9999);
+        splitPane.setDividerLocation(0.99999); //sets the divider to be at the right edge of the window; 1 does not work
       }
     });
 
@@ -225,7 +221,7 @@ public class Final2 {
       engWords[y] = entry.getKey().toString() + " : " + entry.getValue().toString();
       y++;
     }
-    JList engList = new JList(engWords);
+    JList<String> engList = new JList<>(engWords);
     engList.setLayoutOrientation(JList.VERTICAL);
     JScrollPane engScroller = new JScrollPane(engList);
     return engScroller;

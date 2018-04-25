@@ -4,10 +4,16 @@ story:histoire
 world:monde
 shoes:chassures
 friend:ami
-tea:the
+tea:thé
 life:vie
 mouse:souris
 kill:tuer
 sleep:dormir
 computer:ordinateur
 Africa:Afrique
+United States:États Unis
+almond:amande
+bottle:bouteille
+gold:or
+or:ou
+where:où

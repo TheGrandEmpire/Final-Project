@@ -8,8 +8,12 @@ import java.lang.RuntimeException.*;
 
 public class Final2 {
 
-  private static HashMap<String,String> engToFrn = new HashMap<String,String>();
-  private static HashMap<String,String> frnToEng = new HashMap<String,String>();
+	private static HashMap<String,String> engToFrn = new HashMap<String,String>();
+	private static HashMap<String,String> frnToEng = new HashMap<String,String>();
+	private static JRadioButton frButton = new JRadioButton("French");
+	private static JRadioButton esButton = new JRadioButton("Spanish");
+
+
 
   public static void main(String[] args) {
     JFrame window = new JFrame("Final Project");
@@ -42,6 +46,7 @@ public class Final2 {
     //add foreign script (e.g. cyrillic, hanzi) option
     content.add(middle,BorderLayout.CENTER);
 
+    
     JButton saveButton = new JButton("Save");
     bottom.add(saveButton);
     JButton displayButton = new JButton("Display");
@@ -82,13 +87,18 @@ public class Final2 {
         String forn = foreignTF.getText();
         //write to file
         try {
-          FileWriter writer = new FileWriter("foreignWords.txt", true);
-          writer.write(eng + ":" + forn);
-          writer.write("\r\n");   // write new line
-          writer.close();
+			       
+			FileWriter writer = new FileWriter("frenchWords.txt", true);
+			if (esButton.isSelected()) {
+				writer = new FileWriter("spanishWords.txt", true);
+			}
+			writer.write("\r\n");   // write new line
+			writer.write(eng + ":" + forn);
+			writer.close();
         } catch (IOException i) {
           i.printStackTrace();
         }
+        translationLabel.setText("Your word is saved");
       }
     });
 
@@ -116,7 +126,7 @@ public class Final2 {
 
     langSelectionButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        JPanel langSelectionContent = new JPanel(new GridLayout(0,1));
+        JPanel langSelectionContent = new JPanel();
         langSelectionContent.setLayout(new GridLayout(0,1));
         JPanel langSelectionPanel = new JPanel();
         setLangSelectionPanelContent(langSelectionPanel);
@@ -130,6 +140,24 @@ public class Final2 {
       public void actionPerformed(ActionEvent e) {
         splitPane.setDividerLocation(0.99999); //sets the divider to be at the right edge of the window; 1 does not work
       }
+    });
+    
+    esButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+        	engToFrn = new HashMap<String,String>();
+        	frnToEng = new HashMap<String,String>();
+        	readDoc();
+        	foreignLabel.setText("Spanish");
+        }
+    });
+    
+    frButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+        	engToFrn = new HashMap<String,String>();
+        	frnToEng = new HashMap<String,String>();
+        	readDoc();
+        	foreignLabel.setText("French");
+        }
     });
 
     splitPane.setLeftComponent(content);
@@ -147,8 +175,11 @@ public class Final2 {
   static void readDoc(){
     String line;
     try{
-      BufferedReader reader = new BufferedReader(new FileReader("foreignWords.txt"));
-      while ((line = reader.readLine()) != null)
+		BufferedReader reader = new BufferedReader(new FileReader("frenchWords.txt"));
+    	if (esButton.isSelected()) {
+    		reader = new BufferedReader(new FileReader("spanishWords.txt"));
+    	}
+		while ((line = reader.readLine()) != null)
       {
           String[] parts = line.split(":", 2);
           if (parts.length >= 2)
@@ -204,10 +235,22 @@ public class Final2 {
    * @param langSelectionPanel the language selection panel
   */
   static void setLangSelectionPanelContent(JPanel langSelectionPanel) {
-    JRadioButton frenchButton = new JRadioButton("English-French");
-    langSelectionPanel.add(frenchButton);
+	frButton.setMnemonic(KeyEvent.VK_F);
+	frButton.setActionCommand("French");
+	frButton.setSelected(true);
+	
+	esButton.setMnemonic(KeyEvent.VK_S);
+	esButton.setActionCommand("Spanish");
+	
+	ButtonGroup group = new ButtonGroup();
+    group.add(frButton);
+    group.add(esButton);
+	
+	langSelectionPanel.add(frButton);
+	langSelectionPanel.add(esButton);
+
     /*If we expand upon this program, frenchButton will have an ActionListener setting the language to French, and other buttons for other languages.*/
-    langSelectionPanel.add(new JLabel("<html>Users will soon be able to store vocabulary for more languages.</html>"));
+    langSelectionPanel.add(new JLabel("<html>Users will soon be able to<br> store vocabulary for more languages.</html>"));
   }
 
   /** Creates a scroller for the displayContent panel from the contents of the hashmap.

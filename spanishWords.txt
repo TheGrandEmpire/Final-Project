@@ -1,0 +1,20 @@
+dog:perro
+cat:gato
+story:historia
+world:mundo
+shoes:zapatos
+friend:amigo
+tea:té
+life:vida
+mouse:ratón
+kill:matar
+sleep:dormir
+computer:computadora
+Africa:África
+United States:Estados Unidos
+almond:almendra
+bottle:botella
+gold:oro
+or:o
+where:dónde
+hello:hola
